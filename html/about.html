@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <script src="https://www.goat1000.com/tagcanvas.min.js"></script>
+    <link rel="stylesheet" href="../html/about.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('../images/980.jpeg'); /* 在这里替换为你的背景图片路径 */
+            background-size: cover; /* 使图片覆盖整个背景 */
+            background-position: center; /* 将背景图片居中 */
+            background-attachment: fixed; /* 背景固定，页面滚动时不移动 */
+            background-repeat: no-repeat; /* 不重复背景图片 */
+        }
+        .output-container img {
+            display: block;
+            margin: 20px auto; /* 图片水平居中并添加上下边距 */
+            max-width: 100%;
+            height: auto;
+        }
+        .text-output {
+            margin-top: 20px; /* 确保文字显示在图片的下方并有一些间距 */
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="button1" onclick="location.href='../主界面.html'">↩</button>  
+        <h1>智绘古诗</h1>  
+    </header>
+    <div id="myCanvasContainer">
+        <canvas width="1000" height="1000" id="myCanvas" bottom="50vh">
+            如果您看到此信息，您的浏览器不支持 HTML5 Canvas。
+        </canvas>
+    </div>
+    <ul id="tagList" style="display: block;">
+        <li><a href="#">大漠孤烟直，长河落日圆</a></li>
+        <li><a href="#">白日依山尽，黄河入海流</a></li>
+        <li><a href="#">孤舟蓑笠翁，独钓寒江雪</a></li>
+        <li><a href="#">青山隐隐水迢迢，秋尽江南草未凋</a></li>
+        <li><a href="#">朱雀桥边野草花，乌衣巷口夕阳斜</a></li>
+        <li><a href="#">万壑树参天，千山响杜鹃</a></li>
+        <li><a href="#">古木无人径，深山何处钟</a></li>
+        <li><a href="#">客路青山外，行舟绿水前</a></li>
+        <li><a href="#">空山新雨后，天气晚来秋</a></li>
+        <li><a href="#">江静潮初落，林昏瘴不开</a></li>
+        <li><a href="#">不觉碧山暮，秋云暗几重</a></li>
+        <li><a href="#">绿树村边合，青山郭外斜</a></li>
+        <li><a href="#">八月湖水平，涵虚混太清</a></li>
+        <li><a href="#">清晨入古寺，初日照高林</a></li>
+        <li><a href="#">红叶晚萧萧，长亭酒一瓢</a></li>
+        <li><a href="#">树色随山迥，河声入海遥</a></li>
+        <li><a href="#">无边落木萧萧下，不尽长江滚滚来</a></li>
+    </ul>
+    <div class="output-container">
+        <img id="loadingGif" src="../images/划船.gif" style="display: none; width: 35%; height: auto; margin: 0 auto; margin-top: 130px;" alt="Loading...">
+        <div class="text-output"><p>等待为您解答...</p></div>
+    </div>
+    <div class="input-container">
+        <input type="text" class="custom-input" placeholder="Type your message here...">
+        <button class="input-icon">⬆</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            function updateCanvasSize() {
+                const container = document.getElementById('myCanvasContainer');
+                const canvas = document.getElementById('myCanvas');
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                if (TagCanvas.started) {
+                    TagCanvas.Reload('myCanvas'); // 使用 Reload 而不是 Update 以确保形状更新为球型
+                }
+            }
+
+            updateCanvasSize();
+            try {
+                TagCanvas.Start('myCanvas', 'tagList', {
+                textFont: 'Fredericka the Great',
+                textColour: '#000000',
+                outlineColour: '#ffffff', // 标签云框的颜色设置为白色
+                outlineThickness: 2, // 设置边框厚度为 2
+                reverse: true,
+                depth: 0.8,
+                maxSpeed: 0.02,
+                minSpeed: 0.01,
+                wheelZoom: false,
+                initial: [0.1, -0.1],
+                weight: true,
+                weightMode: 'size',
+                weightSizeMin: 30, // 调整后的最小字体大小
+                weightSizeMax: 50, // 调整后的最大字体大小
+                textHeight: 20, // 调整字体大小的百分比才能调整字体大小
+                freezeActive: true,
+                activeCursor: 'pointer',
+                centreImage: null, // 取消中心图像
+                fadeIn: 1000, // 设置标签云进入时的淡入效果
+                fadeInSpeed: 60, // 设置淡入速度
+                animTiming: 'Smooth', // 使动画过渡更平滑
+                shadowBlur: 0, // 移除阴影模糊
+                shadowOffset: [0, 0] // 移除阴影偏移
+                });
+            window.addEventListener('resize', function() {
+                updateCanvasSize();
+            });    
+            } catch(e) {
+                console.error('TagCanvas failed to start:', e);
+            }
+        };
+
+        const API_BASE_URL = 'https://expensive-savor-suspense.ngrok-free.dev';
+        const inputBox = document.querySelector('.custom-input');
+        const outputContainer = document.querySelector('.output-container');
+        const textOutputContainer = outputContainer.querySelector('.text-output');
+        const generateButton = document.querySelector('.input-icon');
+        const loadingGif = document.getElementById('loadingGif');
+        const tags = document.querySelectorAll('#tagList a'); // 选择所有标签元素
+    
+        // 禁用/启用按钮的函数
+        function toggleButtonState(state) {
+            generateButton.disabled = state;
+        }
+
+        // 文本生成函数
+        function generateText() {
+            const inputText = inputBox.value.trim();
+            if (!inputText) {
+                console.error('Input cannot be empty');
+                return;
+            }
+
+            // 清空旧的文本和图片内容
+            const outputParagraph = textOutputContainer.querySelector('p');
+            if (outputParagraph) {
+                outputParagraph.innerHTML = ''; // 清空旧的文本内容
+            }
+
+            const oldImages = outputContainer.querySelectorAll('img');
+            oldImages.forEach(img => img.remove()); // 移除旧的图片
+
+            // 显示加载动图
+            loadingGif.style.display = 'block';
+            toggleButtonState(true);
+
+            // 重新将加载动图插入到输出容器的顶部
+            outputContainer.insertBefore(loadingGif, textOutputContainer);
+
+            fetch(`${API_BASE_URL}/api/generate`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'True'
+                },
+                body: JSON.stringify({ data: inputText }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // 隐藏加载动图
+                loadingGif.style.display = 'none';
+                if (data.image_url) {
+                    displayImage(data.image_url, () => {
+                        if (data.text) {
+                            displayTextWithEffect(data.text);
+                        }
+                    });
+                } else {
+                    console.error('Error: No image data received from API');
+                    toggleButtonState(false);
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                loadingGif.style.display = 'none';
+                toggleButtonState(false);
+            });
+        }
+
+        // 显示图像的函数
+        function displayImage(imageUrl, callback) {
+            fetch(`${API_BASE_URL}${imageUrl}`, {
+                method: 'GET',
+                headers: {
+                    'ngrok-skip-browser-warning': 'True'
+                }
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const imgElement = document.createElement('img');
+                imgElement.alt = "Generated Image";
+                imgElement.style.maxWidth = "100%";
+                imgElement.style.height = "auto";
+    
+                const objectURL = URL.createObjectURL(blob);
+                imgElement.src = objectURL;
+    
+                textOutputContainer.insertAdjacentElement('beforebegin', imgElement);
+                outputContainer.scrollTop = outputContainer.scrollHeight; // 滚动到新添加的图片位置
+
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching image:', error);
+            });
+        }
+
+        // 逐字显示文本的函数
+        function displayTextWithEffect(text) {
+            let paragraphs = text.split('\n');
+            let currentParagraph = 0;
+            let currentIndex = 0;
+    
+            function displayNextChar() {
+                if (currentParagraph < paragraphs.length) {
+                    if (currentIndex < paragraphs[currentParagraph].length) {
+                        textOutputContainer.querySelector('p').innerHTML += paragraphs[currentParagraph][currentIndex];
+                        currentIndex++;
+                        setTimeout(displayNextChar, 30);
+                        outputContainer.scrollTop = outputContainer.scrollHeight; // 保持滚动条在底部
+                    } else {
+                        textOutputContainer.querySelector('p').innerHTML += '<br><br>';
+                        currentParagraph++;
+                        currentIndex = 0;
+                        setTimeout(displayNextChar, 30);
+                    }
+                } else {
+                    toggleButtonState(false);
+                }
+            }
+    
+            displayNextChar();
+        }
+        // 绑定回车键事件
+        inputBox.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                generateButton.click(); // 触发按钮的点击事件
+            }
+        });
+    
+        // 绑定上传按钮点击事件
+        generateButton.addEventListener("click", function() {
+            generateText();
+        });
+    
+        // 为每个标签添加点击事件监听器
+        tags.forEach(tag => {
+            tag.addEventListener('click', function(event) {
+                event.preventDefault(); // 阻止默认的跳转行为
+                inputBox.value = this.textContent.trim(); // 将标签内容复制到输入框
+            });
+        });
+    </script>
+</body>
+</html>

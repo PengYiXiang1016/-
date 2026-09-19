@@ -1,0 +1,142 @@
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    display: flex; /* 使页面内元素横向排列 */
+    justify-content: center; /* 水平居中对齐 */
+    align-items: center; /* 垂直居中对齐 */
+    height: 100vh; /* 设置页面高度为视口高度 */
+    margin: 0; /* 清除默认外边距 */
+    /* background: linear-gradient(to right,
+    rgb(113, 65, 168), 
+    rgba(44, 114, 251, 1)
+    ); */
+    color: #000000; /* 文字颜色为白色 */
+    font-family: Arial, sans-serif; /*设置全局字体*/
+    position: relative;
+}
+
+video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* 背景视频在底层 */
+}
+
+header {
+    /* background-color: rgba(0, 0, 0, 0.332); /* 设置为透明背景，颜色为 #4CAF50，透明度为 0.7 */
+    /* color: rgb(34, 27, 27); */ 
+    padding: 5px;
+    text-align: center; /* 将文本内容水平居中 */
+    position: fixed; /* 固定在页面顶部 */
+    line-height: 30%;
+    width: 100%; /* 宽度为100%，使其横跨整个页面 */
+    box-sizing: border-box; /* 确保 padding 不会导致宽度超出页面 */
+    font-family: cursive;
+    font-size: 100px;
+    letter-spacing: 30px;
+    top:7%;
+    height:20%;
+    border: 2px solid rgba(255, 255, 255, 0); /* 设置边框，白色且带透明度 */
+    background-color: rgba(255, 255, 255, 0);   /*背景设置为透明*/
+}
+
+.button-container {
+    position: absolute; /* 使用绝对定位 */
+    bottom: 0; /* 将容器固定在页面底部 */
+    left: 0; /* 确保容器从左侧开始 */
+    right: 0; /* 确保容器从右侧结束 */
+    display: flex; /* 使用 Flexbox 布局 */
+    justify-content: space-around; /* 按钮之间平均分配空间 */
+    align-items: center; /* 垂直居中 */
+    height: 90%; /* 设置容器高度为视口的20% */
+    margin: 0 400px; /* 控制左右间距为 10px */
+}
+
+.button1{
+    margin: 100px;           /*元素的外边距*/
+    padding: 10px 20px;
+    font-size: 30px;
+    font-family: 'Pacifico', cursive;
+    cursor: pointer;        /*鼠标改为手型*/
+    width: 200px; /* 直接设置宽度 */
+    height: 60px; /* 直接设置高度 */
+    border: 2px solid rgb(255, 255, 255); /* 设置边框，白色且带透明度 */
+    background-color: rgb(255, 255, 255,0.9);   /*背景设置为透明*/
+    border-radius: 20px; /* 设置圆角，您可以根据需要调整数值 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+    transition: background-color 0.3s, transform 0.2s; /* 添加过渡效果 */
+    line-height: 35px;/* 将 line-height 设置为和高度一致 */
+
+}
+.button1:hover {
+    font-size: 28px; /* 悬停时增大字体大小 */
+    transform: scale(1.2); /* 悬停时放大按钮 */
+}
+.button2{
+    margin: 100px;
+    padding: 10px 20px;
+    font-size: 30px;
+    font-family: 'Pacifico', cursive;
+    cursor: pointer;  
+    width: 200px; /* 直接设置宽度 */
+    height: 60px; /* 直接设置高度 */
+    border: 2px solid rgba(255, 255, 255); /* 设置边框，白色且带透明度 */
+    border-radius: 20px; /* 设置圆角，您可以根据需要调整数值 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+    background-color: rgba(255, 255, 255,0.9);   /*背景设置为透明*/
+    transition: background-color 0.3s, transform 0.2s; /* 添加过渡效果 */
+    line-height: 30px;/* 将 line-height 设置为和高度一致 */
+}
+
+.button2:hover {
+    font-size: 28px; /* 悬停时增大字体大小 */
+    transform: scale(1.2); /* 悬停时放大按钮 */
+}
+
+.navbar {
+    position: absolute; /* 使用绝对定位 */
+    top: 50%; /* 顶部位置为视口高度的 50% */
+    transform: translateY(-50%); /* 垂直居中对齐 */
+    right: 0; /* 右边缘对齐页面右侧 */
+    height: 50%; /* 导航栏高度占页面的 50% */
+    display: flex; /* 使用 Flexbox 布局 */
+    flex-direction: column; /* 竖直排列导航项 */
+    justify-content: flex-start; /* 垂直从顶部开始排列导航项 */
+    width: 120px; /* 导航栏的宽度 */
+    background-color:rgba(240, 240, 240, 0); /* 导航栏背景颜色 */
+    padding: 20px; /* 内边距 */
+    /* box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); 添加阴影效果 */
+    transition: box-shadow 0.3s, transform 0.3s; /* 添加过渡效果 */
+}
+
+.nav-item {
+    margin: 10px 0; /* 导航项的上下间距 */
+    padding: 10px; /* 导航项的内边距 */
+    background-color: rgba(240, 240, 240, 0.7); /* 设置为透明背景，颜色为 #f0f0f0，透明度为 0.7 */
+    border: 1px solid rgba(221, 221, 221, 0.7); /* 设置边框，带透明度 */
+    border-radius: 20px; /* 导航项的圆角 */
+    cursor: pointer; /* 鼠标悬停时显示手型 */
+    transition: background-color 0.3s, transform 0.2s; /* 添加过渡效果 */
+}
+
+.nav-item:hover {
+    background-color: #e0e0e0; /* 鼠标悬停时背景颜色变化 */
+    transform: scale(1.05); /* 鼠标悬停时放大效果 */
+}
+
+.output {
+    margin-left: 20px; /* 输出区域与导航栏之间的间距 */
+    position: absolute; /* 使用绝对定位 */
+    width: 100px; /* 输出区域的宽度 */
+    right: 200px; /* 右边缘对齐页面右侧 */
+    background-color: #ffffff; /* 输出区域背景颜色 */
+    padding: 15px; /* 内边距 */
+    border: 1px solid #ddd; /* 边框 */
+    border-radius: 5px; /* 圆角 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    
+}

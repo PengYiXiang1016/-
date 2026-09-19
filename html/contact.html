@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <style>
+        /* 添加选中状态的样式 */
+        .selected {
+            border: 3px solid #ff0000;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            transition: border 0.3s ease, box-shadow 0.3s ease;
+        }
+        /* 添加右侧显示图片的样式 */
+        .selected-image {
+            position: absolute;
+            right: 5%;
+            object-fit: cover;
+        }
+        /* 背景视频样式 */
+        .background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            object-fit: cover;
+        }
+        /* 背景视频遮罩 */
+        .background-video::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 0;
+        }
+        header {
+            background-color: rgba(205, 174, 174, 0);
+            color: rgb(34, 27, 27);
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 80vw;
+            height: 20vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Pacifico', cursive;
+            font-size: 3vw;
+            letter-spacing: 1vw;
+            padding: 0 2vw;
+            box-sizing: border-box;
+        }
+        .back-button {
+            width: 2.4vw;
+            height: 2.4vw;
+            border-radius: 50%;
+            border: 0.2vw solid #333;
+            background-color: transparent;
+            font-size: 1.5vw;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-right: 5vw;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .input-container {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            border-radius: 20px;
+            padding: 8px 15px;
+            width: 52%;
+            position: absolute;
+            top: 20%;
+            height: 5vh;
+            margin-top: 5px;
+            margin-bottom: 50px;
+            left: 20%;
+        }
+        .custom-input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 16px;
+            padding-left: 10px;
+        }
+        .icon {
+            font-size: 18px;
+            margin-right: 10px;
+            color: #555;
+        }
+        .input-icon {
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .input-icon:hover {
+            background-color: #555;
+        }
+        .container-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            align-items: center;
+            position: absolute;
+            top: 30%;
+            left: 8%;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 120px;
+            border: 1px solid #000;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            height: 80px;
+        }
+        .text-content {
+            display: flex;
+            flex-direction: column;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+        }
+        .image-button {
+            width: 80px;
+            height: 80px;
+            border: none;
+            padding: 0;
+            background: none;
+            cursor: pointer;
+        }
+        .image-button img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 2px solid transparent; /* 默认状态下透明的边框 */
+            transition: border 0.3s ease;
+        }
+
+        .container.selected .image-button img {
+            border: 3px solid #ff0000; /* 选中时的红色边框 */
+        }
+
+        .output-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            margin-bottom: 10px;
+            width: 50%;
+            height: 60%;
+            border-radius: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 30%;
+            right: 27%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .output-poem-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .output-image-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        #outputPoem {
+            text-align: center;
+            white-space: pre-line;
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5em;
+        }
+        #outputTitle {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        #generatedImage {
+            max-width: 90%;
+            height: auto;
+            opacity: 0; /* 初始透明度为0 */
+            transition: opacity 1s ease-in-out; /* 渐变效果 */
+        }
+        #imageText {
+            text-align: center;
+            font-family: 'Pacifico', cursive;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景视频 -->
+    <video autoplay muted loop class="background-video">
+        <source src="../vedio/写诗背景.mp4" type="video/mp4">
+        您的浏览器不支持 HTML5 视频。
+    </video>
+
+    <!--标题以及返回按钮-->
+    <header>
+        <button class="back-button" onclick="location.href='../主界面.html'">↩</button>  
+        <h1>智写新诗</h1>  
+    </header>
+    
+    <!--第一个输入框-->
+    <div class="input-container">
+        <span class="icon">题目</span> <!-- 左侧的图标 -->
+        
+        <input type="text" id="poemTitle" class="custom-input" placeholder="请输入诗歌题目..." autocomplete="off">
+        <button class="input-icon" onclick="submitInput()">↰</button> <!-- 右侧箭头按钮，点击时触发JS函数 -->
+    </div>
+
+    <div class="container-wrapper" id="containerWrapper"></div>
+    <img id="selectedImage" class="selected-image" src="" alt="选中人物的图片" style="display: none;">
+
+    <div class="output-container">
+        <!-- 输出内容分为标题和诗歌部分 -->
+        <div class="output-poem-container">
+            <div id="outputTitle"></div>
+            <p id="outputPoem">等待生成您的诗歌...</p>
+        </div>
+
+        <!-- 垂直虚线 -->
+        <div style="width: 2px; height: 80%; background: repeating-linear-gradient(to bottom, #333, #333 5px, transparent 5px, transparent 10px); margin: 0 20px;"></div>
+
+        <!-- 输出图片 -->
+        <div class="output-image-container">
+            <p id="imageText">等待生成您的图片...</p>
+            <img id="generatedImage" alt="Generated Image">
+        </div>
+    </div>
+
+    <script>
+        // 定义每个组件的名字和图片路径
+        const items = [
+            { name: '李白', imgSrc: '../images/libai.jpg', displayImgSrc: '../images/libai-display.png', displayWidth: '350px', displayHeight: '1000px', displayTop: '4%', displayRight: '5%', flipHorizontal: true },
+            { name: '杜甫', imgSrc: '../images/dufu.jpg', displayImgSrc: '../images/dufu-display.png', displayWidth: '300px', displayHeight: '700px', displayTop: '20%', displayRight: '4%', flipHorizontal: false },
+            { name: '李清照', imgSrc: '../images/liqingzhao.jpg', displayImgSrc: '../images/liqingzhao-display.png', displayWidth: '320px', displayHeight: '700px', displayTop: '18%', displayRight: '5%', flipHorizontal: false },
+            { name: '苏轼', imgSrc: '../images/sushi.jpg', displayImgSrc: '../images/sushi-display.png', displayWidth: '280px', displayHeight: '700px', displayTop: '23%', displayRight: '4%', flipHorizontal: false }
+        ];
+
+        const containerWrapper = document.getElementById('containerWrapper');
+        const selectedImage = document.getElementById('selectedImage');
+        let selectedAuthor = null;
+        let selectedElement = null;
+
+        // 动态生成多个组件
+        items.forEach((item) => {
+            const container = document.createElement('div');
+            container.className = 'container';
+
+            const textContent = document.createElement('div');
+            textContent.className = 'text-content';
+            textContent.innerHTML = item.name.split('').join('<br>');
+
+            const imageButton = document.createElement('button');
+            imageButton.className = 'image-button';
+            imageButton.onclick = () => {
+                selectedAuthor = item.name;
+                if (selectedElement) {
+                    selectedElement.classList.remove('selected');
+                }
+                container.classList.add('selected');
+                selectedElement = container;
+
+                selectedImage.src = item.displayImgSrc;
+                selectedImage.style.display = 'block';
+                selectedImage.style.width = item.displayWidth;
+                selectedImage.style.height = item.displayHeight;
+                selectedImage.style.top = item.displayTop;
+                selectedImage.style.right = item.displayRight;
+                selectedImage.style.transform = item.flipHorizontal ? 'scaleX(-1)' : 'scaleX(1)';
+                selectedImage.alt = `${item.name}的图片`;
+            };
+
+            const image = document.createElement('img');
+            image.src = item.imgSrc;
+            image.alt = `${item.name}的图片`;
+            imageButton.appendChild(image);
+
+            container.appendChild(textContent);
+            container.appendChild(imageButton);
+            containerWrapper.appendChild(container);
+        });
+
+        const API_BASE_URL = 'https://expensive-savor-suspense.ngrok-free.dev';
+
+        async function submitInput() {
+            document.getElementById('outputPoem').style.fontSize = '1.5em'; // 增大生成后的古诗字体大小
+            document.getElementById('imageText').style.fontSize = '1.5em';
+            const title = document.getElementById('poemTitle').value.trim();
+            if (!title) {
+                alert("请先输入诗歌题目！");
+                return;
+            }
+            if (!selectedAuthor) {
+                alert("请先选择一位作者！");
+                return;
+            }
+            clearOutput();
+            document.getElementById('outputPoem').innerText = "正在生成您的诗歌，请稍候...";
+            document.getElementById('imageText').innerText = "正在生成您的图像，请稍候...";
+
+            const requestData = { title: title, author: selectedAuthor };
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/generate_poetry_text`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    clearOutput(); // 清除生成新内容前的内容
+                    document.getElementById('outputTitle').innerText = title;
+                    document.getElementById('outputPoem').innerText = data.text.replace(/([。！？])/g, '$1\n');
+                    document.getElementById('outputPoem').style.fontSize = '1.5em'; // 增大生成后的古诗字体大小
+                    document.getElementById('imageText').style.fontSize = '1.5em'; // 增大生成后的古诗字体大小
+                    if (data.image_url) {
+                        displayGeneratedImage(data.image_url);
+                    } else {
+                        console.warn("未返回图像 URL");
+                    }
+                } else {
+                    document.getElementById('outputPoem').innerText = "生成诗歌和图像时出错，请重试。";
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('outputPoem').innerText = "无法连接服务器，请稍后再试。";
+            }
+        }
+
+        function displayGeneratedImage(imageUrl) {
+            const generatedImage = document.getElementById('generatedImage');
+            generatedImage.src = ''; // 确保在加载新图像前清除旧图像
+            fetch(`${API_BASE_URL}${imageUrl}`, {
+                method: 'GET',
+                headers: {
+                    'ngrok-skip-browser-warning': 'True'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch image: ${response.statusText}`);
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const objectURL = URL.createObjectURL(blob);
+                generatedImage.src = objectURL;
+                generatedImage.onload = () => {
+                    generatedImage.style.opacity = 1; // 渐变显示图片
+                };
+            })
+            .catch(error => {
+                console.error('Error fetching image:', error);
+            });
+        }
+
+        function clearOutput() {
+            document.getElementById('outputTitle').innerText = '';
+            document.getElementById('outputPoem').innerText = '';
+            const generatedImage = document.getElementById('generatedImage');
+            generatedImage.src = '';
+            generatedImage.style.opacity = 0; // 重置透明度以确保渐变效果下次生效
+            document.getElementById('imageText').innerText = '';
+        }
+
+        document.getElementById('poemTitle').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                submitInput();
+            }
+        });
+    </script>
+</body>
+</html>

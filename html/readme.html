@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>古韵今风 - 古诗词大模型</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>古韵今风 - 古诗词大模型</h1>
+    </header>
+    <div class="container">
+        <div class="section">
+            <h2>作品主旨</h2>
+            <p>习近平总书记指出，传统文化的传承不仅要保护和弘扬经典，还要与现代文明相结合，实现文化的创造性转化和创新性发展。
+            本团队旨在将大模型技术和古诗词文化相结合，训练出一个精通古诗词的“专家”模型。通过用户交互平台，让用户能直观、有效地学习和创作诗句，弘扬中华传统文化。</p>
+        </div>
+
+        <div class="section">
+            <h2>系统介绍</h2>
+            <h3>主界面</h3>
+            <p>主界面包含“赏诗”和“作诗”两个主要按钮，分别跳转到相应的功能界面，右侧的介绍按钮跳转到信息页面。</p>
+            <h3>智绘古诗界面</h3>
+            <p>用户可通过左侧3D动态云选择诗句，或直接输入诗句，右侧上方输出框展示生成结果。</p>
+            <h3>智写新诗界面</h3>
+            <p>用户输入题目，选择对应风格后生成诗句，输出框左侧显示诗句，右侧显示对应图片。</p>
+        </div>
+
+        <div class="section">
+            <h2>技术实现</h2>
+            <h3>数据集</h3>
+            <p>使用 Kaggle 的《Classic Chinese Poem with annotation》及 Github 的《Chinese-poetry》数据集，数据包括古诗、翻译和解析。</p>
+            <h3>模型训练</h3>
+            <p>我们训练了 2 个 llama3-Chinese-8B 模型和 1 个 Stable-Diffusion 模型，分别用于文字生成和图像生成。</p>
+            <p>微调前后效果对比展示了模型在诗句生成和图像生成方面的提升。</p>
+        </div>
+
+        <div class="section">
+            <h2>总结与展望</h2>
+            <p>通过 AI 技术与传统文化的结合，实现文化的传承和技术创新。未来希望进一步优化模型训练方法和数据集，提升生成效果。</p>
+        </div>
+
+        <div class="section">
+            <h2>使用注意事项</h2>
+            <ul>
+                <li>生成按钮短时间内请勿重复点击，以免造成服务器崩溃。</li>
+                <li>若提示生成错误，请联系维护人员：<a href="mailto:pengyixiang@stu.cqut.edu.cn">pengyixiang@stu.cqut.edu.cn</a></li>
+            </ul>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 古韵今风 - 大模型项目</p>
+    </footer>
+</body>
+</html>
