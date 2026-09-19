@@ -39,7 +39,7 @@
 - 生成古诗词内容；
 - 同步生成与诗词意境相匹配的图片。
 
-![项目演示](assets/analysis.gif)
+![项目演示](assets/write.gif)
 
 ## 技术方案
 
